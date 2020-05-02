@@ -1,0 +1,20 @@
+import requests, csv, json, sys
+from . import __init__
+
+symbols = ["AAPL", "DAL", "LUV"]
+companyProfileUrl = 'https://financialmodelingprep.com/api/v3/company/profile/{symbol}'
+
+# print(symbols)
+def show():
+    for symbol in symbols:
+        r = requests.get(companyProfileUrl.format(symbol=symbol))
+        json = r.json()
+        symbol = json.get("symbol")
+        profile = json.get("profile")
+        with open('mycsvfile.csv', 'wb') as f:  # Just use 'w' mode in 3.x
+            w = csv.DictWriter(f, json.get("profile").keys())
+            w.writeheader()
+            #w.writerow(json.get("profile"))
+show()
+
+#{'symbol': 'AAPL', 'profile': {'price': 289.07, 'beta': '1.228499', 'volAvg': '50819157', 'mktCap': '1.26482003E12', 'lastDiv': '3.08', 'range': '170.27-327.85', 'changes': -4.73, 'changesPercentage': '(-1.61%)', 'companyName': 'Apple Inc.', 'exchange': 'Nasdaq Global Select', 'industry': 'Computer Hardware', 'website': 'http://www.apple.com', 'description': 'Apple Inc is designs, manufactures and markets mobile communication and media devices and personal computers, and sells a variety of related software, services, accessories, networking solutions and third-party digital content and applications.', 'ceo': 'Timothy D. Cook', 'sector': 'Technology', 'image': 'https://financialmodelingprep.com/images-New-jpg/AAPL.jpg'}}
