@@ -9,6 +9,10 @@ def show():
     for symbol in symbols:
         r = requests.get(companyProfileUrl.format(symbol=symbol))
         json = r.json()
+       outputFile = open('output.csv', 'w', newline='')
+
+
+
         symbol = json.get("symbol")
         profile = json.get("profile")
         with open('mycsvfile.csv', 'wb') as f:  # Just use 'w' mode in 3.x
